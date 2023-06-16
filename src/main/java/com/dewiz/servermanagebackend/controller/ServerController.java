@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
-@RestController("/server")
+@RestController
+@RequestMapping("server")
 @RequiredArgsConstructor
 public class ServerController {
     private final ServerServiceImpl serverService;
@@ -92,6 +93,7 @@ public class ServerController {
 
     @GetMapping(path = "image/{fileName}", produces = IMAGE_PNG_VALUE)
     public byte[] getServerImage(@PathVariable("fileName") String fileName) throws IOException {
-        return Files.readAllBytes(Path.of(Objects.requireNonNull(getClass().getResource(fileName)).getPath()));
+        Path imagePath = Paths.get("src","main", "resources", "static", fileName);
+        return Files.readAllBytes(imagePath);
     }
 }
