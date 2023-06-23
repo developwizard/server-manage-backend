@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
@@ -26,7 +27,9 @@ public class ServerController {
     private final ServerServiceImpl serverService;
 
     @GetMapping("list")
-    public ResponseEntity<Response> getServers() {
+    public ResponseEntity<Response> getServers() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+//        throw new InterruptedException("Something went wrong");
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
@@ -53,7 +56,7 @@ public class ServerController {
     }
 
     @PostMapping("save")
-    public ResponseEntity<Response> pingServer(@RequestBody @Valid Server server)  {
+    public ResponseEntity<Response> saveServer(@RequestBody @Valid Server server)  {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())

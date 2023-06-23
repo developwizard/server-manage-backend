@@ -27,7 +27,7 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public Server create(Server server) {
         log.info("Saving new server: {}", server.getName());
-        server.setImageUrl(server.getImageUrl());
+        server.setImageUrl(setServerImageUrl());
         return serverRepository.save(server);
     }
     @Override
@@ -65,7 +65,7 @@ public class ServerServiceImpl implements ServerService {
         return Boolean.TRUE;
     }
     private String setServerImageUrl() {
-        String[] imageNames = {"server1.png, server2.png, server3.png, server4.png, server5.png, server6.png, server7.png, server8.png"};
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/server/image" + imageNames[new Random().nextInt(8)]).toUriString();
+        String[] imageNames = {"server1.png", "server2.png", "server3.png", "server4.png", "server5.png", "server6.png", "server7.png", "server8.png"};
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/server/image/" + imageNames[new Random().nextInt(8)]).toUriString();
     }
 }
